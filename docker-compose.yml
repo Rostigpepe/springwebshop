@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  mysqldb:
+    container_name: mysqldb
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123100
+      - MYSQL_DATABASE=springwebstoredb
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=123100
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysqldb:/var/lib/mysql
+  api:
+    container_name: api
+    image: api:latest
+    build: "api"
+    depends_on:
+      - mysqldb
+    ports:
+      - "8080:8080"
+    restart: always
+  frontend:
+    container_name: frontend
+    image: frontend:latest
+    build: "frontend"
+    ports:
+      - "9001:9001"
+    restart: always
+
+volumes:
+  mysqldb:
