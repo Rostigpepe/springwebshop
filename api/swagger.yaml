@@ -1,0 +1,289 @@
+swagger: "2.0"
+info:
+  description: "Im tired and doing @EnableSwagger2 literally breaks my program :)"
+  version: "1.3.3.7"
+  title: "Robins Pain"
+host: "localhost:8080"
+tags:
+- name: "items"
+  description: "All about our items"
+- name: "customers"
+  description: "Customers and stuff"
+- name: "orders"
+  description: "Everything for orders"
+- name: "sign_up"
+  description: "Everything for orders"
+- name: "login"
+  description: "To log in"
+  
+paths:
+  /items:
+    get:
+      tags:
+      - "items"
+      summary: "Gets all items"
+      description: "It literally just gets all items"
+      operationId: "getAllItems"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Some item is wonky as hell"
+    post:
+      tags:
+      - "items"
+      summary: "Add a new item"
+      description: "Adds the sent item to the store"
+      operationId: "createNewItem"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Item to be added to the store"
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            price:
+              type: integer
+      responses:
+        "200":
+          description: "Success"
+        "400":
+          description: "Bad request"
+        "403":
+          description: "Forbidden"
+  /items{itemId}:
+    get:
+      tags:
+      - "items"
+      summary: "Find item by ID"
+      description: "Returns a single item based on ID"
+      operationId: "getItem"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "itemId"
+        in: "path"
+        description: "ID of item to return"
+        required: true
+        type: string
+      responses:
+        "200":
+          description: "Successful operation"
+        "400":
+          description: "Bad request"
+        "403":
+          description: "Forbidden"
+  /items/buy:
+    post:
+      tags:
+      - "items"
+      summary: "Add a new order"
+      description: "Adds the new order to the database"
+      operationId: "buy"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Order to be added"
+        required: true
+        schema:
+          type: object
+          properties:
+            customerId:
+              type: integer
+            itemId:
+              type: integer
+      responses:
+        "200":
+          description: "Success"
+        "400":
+          description: "Bad request"
+        "403":
+          description: "Forbidden"
+          
+  /customers:
+    get:
+      tags:
+      - "customers"
+      summary: "Gets all customers"
+      description: "It literally just gets all customers"
+      operationId: "getAllCustomers"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Something is wonky as hell"
+          
+    post:
+      tags:
+      - "customers"
+      summary: "Add a new customer"
+      description: "Adds the new customer to the database"
+      operationId: "registerNewCustomer"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Item to be added to the store"
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            price:
+              type: string
+            birthday:
+              type: string
+      responses:
+        "200":
+          description: "Success"
+        "400":
+          description: "Bad request"
+        "403":
+          description: "Forbidden"
+  /customers{customerId}:
+    get:
+      tags:
+      - "customers"
+      summary: "Find item by ID"
+      description: "Returns a single item based on ID"
+      operationId: "getCustomer"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "customerId"
+        in: "path"
+        description: "ID of customer to return"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Successful operation"
+        "400":
+          description: "Bad request"
+        "403":
+          description: "Forbidden"
+      
+  /orders:
+    get:
+      tags:
+      - "orders"
+      summary: "Gets all orders"
+      description: "It literally just gets all ordes"
+      operationId: "getAllOrder"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Some item is wonky as hell"
+  /orders/order/{orderId}:
+    get:
+      tags:
+      - "orders"
+      summary: "Find order by ID"
+      description: "Returns a single order based on ID"
+      operationId: "getOrder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "orderId"
+        in: "path"
+        description: "ID of order to return"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Successful operation"
+        "400":
+          description: "Bad request"
+        "403":
+          description: "Forbidden"
+  /orders/{customerId}:
+    get:
+      tags:
+      - "orders"
+      summary: "Find all orders by customer ID"
+      description: "Returns all orders based on customer ID"
+      operationId: "getCustomerOrders"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "customerId"
+        in: "path"
+        description: "ID of which we shall find all orders"
+        required: true
+        type: "integer"
+      responses:
+        "200":
+          description: "Successful operation"
+        "400":
+          description: "Bad request"
+        "403":
+          description: "Forbidden"
+  /sign_up:
+    post:
+      tags:
+      - "sign_up"
+      summary: "Add a new user"
+      description: "Adds the new user to the database"
+      operationId: "saveUser"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User to be registered"
+        required: true
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+      responses:
+        "201":
+          description: "Created"
+        "400":
+          description: "Bad request"
+          
+  /login:
+    post:
+      tags:
+      - "login"
+      summary: "Log user in"
+      description: "Logs a user in"
+      operationId: "login"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User to be registered"
+        required: true
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+      responses:
+        "200":
+          description: "Success"
+        "403":
+          description: "Forbidden"
